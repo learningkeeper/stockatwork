@@ -8,14 +8,19 @@ import subprocess
 import datetime
 import stockmodule as m
 import datetime
+import s0056
 
 def check_pw():
     global stop 
     stop = False
+    _, msg1, msg2 = s0056.send_info(2)
+    listbox.insert(tk.END, str(msg1))
+    listbox.insert(tk.END, str(msg2))
     if pwvar.get()  == 'joejoe': 
         stockinfo = sc.sclick()
         for stock_item in stockinfo:
             listbox.insert(tk.END, str(stock_item))
+
     else:
         messagebox.askyesno("Reminder", "Pleae enter the password")
 def athenz():
@@ -57,8 +62,10 @@ def stock_when_to_buy():
     if datetime.date.today().isoweekday() <= 5:
         if now.hour < 14 and now.hour >= 9:
             stock_buy_info = m.check_stock_send()
+            _, msg = s0056.send_info(2)
             for item in stock_buy_info:
                 listbox.insert(tk.END, str(item))
+            listbox.insert(tk.END, str(msg))
     window.after(180000, stock_when_to_buy)
 
 #main window

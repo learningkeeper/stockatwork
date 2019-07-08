@@ -3,6 +3,7 @@ import sys
 sys.path.append('/anaconda3/lib/python3.7/site-packages')
 import twstock
 import requests
+import s0056 
 
 def getpw(file):
     with open(file) as fh:
@@ -69,5 +70,8 @@ def check_stock_send():
                 log1[i] = '賣出'
         act, why = get_best(sid)
         log2.append(name + str(price) + act + ' (' + why + ')')
+    flag, msg1, msg2 = s0056.send_info(2)
+    if flag == 1:
+        send_ifttt('0056爆大量', msg1, msg2)
     return log2
 
